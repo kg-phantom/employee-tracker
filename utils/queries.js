@@ -91,8 +91,10 @@ class Role {
 
 class Employee {
     displayEmployees() {
-        db.promise().query(`SELECT employee.id, employee.first_name, employee.last_name, role.title AS title, department.name AS department, role.salary AS salary, employee.manager_id AS manager
+        db.promise().query(`SELECT employee.id, employee.first_name, employee.last_name, role.title AS title, department.name AS department, role.salary AS salary, CONCAT (employee2.first_name," ",employee2.last_name) AS manager
         FROM employee
+        LEFT JOIN employee AS employee2
+        ON employee.manager_id = employee2.id
         LEFT JOIN role
         ON employee.role_id = role.id
         LEFT JOIN department
