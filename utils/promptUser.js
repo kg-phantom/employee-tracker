@@ -19,25 +19,32 @@ const promptUser = () => {
     .then(({ action }) => {
         switch (action) {
             case 'View All Departments':
-                departmentTable.displayDepartments();
+                departmentTable.displayDepartments()
+                    .then(promptUser);
                 break;
             case 'View All Roles':
-                roleTable.displayRoles();
+                roleTable.displayRoles()
+                    .then(promptUser);
                 break;
             case 'View All Employees':
-                employeeTable.displayEmployees();
+                employeeTable.displayEmployees()
+                    .then(promptUser);
                 break;
             case 'Add A Department':
-                departmentTable.promptNewDepartment();
+                departmentTable.promptNewDepartment()
+                    .then(promptUser);
                 break;
             case 'Add A Role':
-                roleTable.promptNewRole();
+                roleTable.promptNewRole()
+                    .then(promptUser);
                 break;
             case 'Add An Employee':
-                employeeTable.promptNewEmployee();
+                employeeTable.promptNewEmployee()
+                    .then(promptUser);
                 break;
             case 'Update An Employee Role':
-                employeeTable.promptUpdateRole();
+                employeeTable.promptUpdateRole()
+                    .then(promptUser);
                 break;
         }
     })
