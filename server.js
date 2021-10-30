@@ -1,7 +1,9 @@
 const db = require('./db/connection');
 const express = require('express');
 const inquirer = require('inquirer');
-const { Department, Role, Employee } = require('./utils/queries');
+const Department = require('./lib/Department');
+const Role = require('./lib/Role');
+const Employee = require('./lib/Employee');
 
 // objects for tables
 const departmentTable = new Department();
@@ -65,69 +67,13 @@ const promptUser = () => {
                 employeeTable.displayEmployees();
                 break;
             case 'Add A Department':
-                inquirer.prompt({
-                        type: 'input',
-                        name: 'departmentName',
-                        message: 'What is the name of the new department?',
-                        validate: input => {
-                            if(input) {
-                                return true;
-                            } else {
-                                console.log('\nPlease enter a department name!');
-                                return false;
-                            }
-                        }
-                })
-                .then(({ departmentName }) => {
-                    departmentTable.addDepartment(departmentName);
-                })
+                departmentTable.promptNewDepartment();
                 break;
             case 'Add A Role':
-                inquirer.prompt([
-                    {
-                        type: 'input',
-                        name: 'title',
-                        message: 'What is the title of the new role?',
-                        validate: input => {
-                            if(input) {
-                                return true;
-                            } else {
-                                console.log('\nPlease enter a title!');
-                                return false;
-                            }
-                        }
-                    },
-                    {
-                        type: 'input',
-                        name: 'salary',
-                        message: 'What is the salary of the new role?',
-                        validate: input => {
-                            var regex = /^[0-9]+$/;
-                            if(input.match(regex)) {
-                                return true;
-                            } else {
-                                console.log('\nPlease enter a salary!');
-                                return false;
-                            }
-                        }
-                    },
-                    {
-                        type: 'input',
-                        name: 'department',
-                        message: 'What is the department of the new role?',
-                        //choices: []
-                    },
-                ])
-                .then(({ title, salary, department }) => {
-                    // if(roleTable.validateNewRole(title)) {
-                    //     console.log('validated and added.');
-                        roleTable.addRole(title, salary, department);
-                //     }
-                //     else {console.log('not added')}
-                })
+                roleTable.promptNewRole();
                 break;
             case 'Add An Employee':
-                console.log(action);
+                employeeTable.promptNewEmployee();
                 break;
             case 'Update An Employee Role':
                 console.log(action);
@@ -138,5 +84,4 @@ const promptUser = () => {
     //     setTimeout(promptUser, 500);
     // });
 };
-//console.log(departmentTable.getDepartments());
 promptUser();
