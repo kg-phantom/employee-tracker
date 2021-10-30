@@ -1,13 +1,12 @@
 const db = require('./db/connection');
-//const apiRoutes = require('./routes/apiRoutes');
 const express = require('express');
 const inquirer = require('inquirer');
-
 const { Department, Role, Employee } = require('./utils/queries');
-// const displayDepartments = require('./utils/department');
-// const displayRoles = require('./utils/role');
-// const displayEmployees = require('./utils/employee');
-//const cTable = require('console.table');
+
+// objects for tables
+const departmentTable = new Department();
+const roleTable = new Role();
+const employeeTable = new Employee();
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -15,9 +14,6 @@ const app = express();
 // Express middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-// // Use apiRoutes
-// app.use('/api', apiRoutes);
 
 // Default response for any other request (Not Found)
 app.use((req, res) => {
@@ -60,35 +56,87 @@ const promptUser = () => {
     .then(({ action }) => {
         switch (action) {
             case 'View All Departments':
-                var tableDepartment = new Department('department');
-                tableDepartment.displayDepartments();
+                departmentTable.displayDepartments();
                 break;
             case 'View All Roles':
-                var tableRole = new Role('role');
-                tableRole.displayRoles();
+                roleTable.displayRoles();
                 break;
             case 'View All Employees':
-                var tableEmployee = new Employee('employee');
-                tableEmployee.displayEmployees();
+                employeeTable.displayEmployees();
                 break;
             case 'Add A Department':
                 inquirer.prompt({
                         type: 'input',
                         name: 'departmentName',
-                        message: 'What is the name of the new department?'
+                        message: 'What is the name of the new department?',
+                        validate: input => {
+                            if(input) {
+                                return true;
+                            } else {
+                                console.log('\nPlease enter a department name!');
+                                return false;
+                            }
+                        }
                 })
                 .then(({ departmentName }) => {
-                    var tableDepartment = new Department('department');
-                    console.log(departmentName);
-                    tableDepartment.addDepartment(departmentName);
+                    departmentTable.addDepartment(departmentName);
                 })
                 break;
             case 'Add A Role':
+                inquirer.prompt([
+                    {
+                        type: 'input',
+                        name: 'title',
+                        message: 'What is the title of the new role?',
+                        validate: input => {
+                            if(input) {
+                                return true;
+                            } else {
+                                console.log('\nPlease enter a title!');
+                                return false;
+                            }
+                        }
+                    },
+                    {
+                        type: 'input',
+                        name: 'salary',
+                        message: 'What is the salary of the new role?',
+                        validate: input => {
+                            var regex = /^[0-9]+$/;
+                            if(input.match(regex)) {
+                                return true;
+                            } else {
+                                console.log('\nPlease enter a salary!');
+                                return false;
+                            }
+                        }
+                    },
+                    {
+                        type: 'input',
+                        name: 'department',
+                        message: 'What is the department of the new role?',
+                        //choices: []
+                    },
+                ])
+                .then(({ title, salary, department }) => {
+                    // if(roleTable.validateNewRole(title)) {
+                    //     console.log('validated and added.');
+                        roleTable.addRole(title, salary, department);
+                //     }
+                //     else {console.log('not added')}
+                })
+                break;
+            case 'Add An Employee':
+                console.log(action);
+                break;
+            case 'Update An Employee Role':
                 console.log(action);
                 break;
         }
     })
-    //.finally(promptUser);
+    // .finally(() => {
+    //     setTimeout(promptUser, 500);
+    // });
 };
-
+//console.log(departmentTable.getDepartments());
 promptUser();

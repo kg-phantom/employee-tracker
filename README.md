@@ -18,7 +18,7 @@ A tracker app that allows the user to view and manage their business's departmen
 * [Demo](#demo)
 * [Installation](#installation)
 * [Usage](#usage)
-* [Routes](#routes)
+* [Queries](#queries)
 * [License](#license)
 * [Questions](#questions)
 
@@ -40,15 +40,12 @@ npm install console.table --save;
 ## Usage
 1. 
 
-## Routes
-This application utilizes multiple routes:
-- GET `/api/departments` to display the departments table.
-- GET `/api/roles` to display the role table.
-- GET `/api/employees` to display the employee table.
-
-- GET `/notes`: Retrieves the previously saved notes.
-- POST `/notes`: Creates a new note and saves it.
-- DELETE `/notes`: Deletes a note.
+## Queries
+This application utilizes multiple queries:
+- `SELECT` to display the different tables for Departments, Roles, and Employees.
+- `JOIN` to join multiple tables together in order to display all the necessary information in a single table.
+- `INSERT INTO` to add a new department, role, or employee.
+- `UPDATE` to update the record for an employee.
 
 ## License
 Licensed under the [MIT](https://choosealicense.com/licenses/mit/) license.
