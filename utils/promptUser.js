@@ -8,7 +8,7 @@ const departmentTable = new Department();
 const roleTable = new Role();
 const employeeTable = new Employee();
 
-function promptUser() {
+const promptUser = () => {
     inquirer
     .prompt({
         type: 'list',
@@ -37,7 +37,7 @@ function promptUser() {
                 employeeTable.promptNewEmployee();
                 break;
             case 'Update An Employee Role':
-                console.log(action);
+                employeeTable.promptUpdateRole();
                 break;
         }
     })
