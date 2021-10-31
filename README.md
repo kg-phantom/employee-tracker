@@ -21,7 +21,7 @@ A tracker app that allows the user to view and manage their business's departmen
 * [Questions](#questions)
 
 ## Demo
-[Click here](https://mysterious-savannah-48786.herokuapp.com) to watch a demo of the application.
+[Click here](https://drive.google.com/file/d/14z6HRPoWoNxQNTJVMgHnGCEFXSu2Ps8f/view) to watch a demo of the application.
 
 ## Installation
 1. Install [Node.js](https://nodejs.org/en/) and [MySQL](https://dev.mysql.com/downloads/mysql) if you haven't already.
